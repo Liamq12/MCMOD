@@ -140,7 +140,6 @@ public class MOD {
 	public static void generateOre(String name, int veinSize, int minHeight, int maxHeight, int amount) {
 		SpecialOre so = new SpecialOre(name, veinSize, minHeight, maxHeight, amount);
 		oreGenerationKeys.add(so);
-		System.out.println("testdebugmessage34" + oreGenerationKeys.size());
 	}
 	
 	
@@ -222,11 +221,7 @@ public class MOD {
 	}
 	public static void readyLang() {
 		File myJSON = new File(ExampleMod.PATH + "\\src\\main\\resources\\assets\\example\\lang\\en_us.json");
-		if(myJSON.delete()) {
-			System.out.println("Removed!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		}else{
-			System.out.println("NahFam!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-		}
+		myJSON.delete();
 		deleteFolderContents(new File(ExampleMod.PATH + "\\src\\main\\resources\\assets\\example\\models\\item"));
 		deleteFolderContents(new File(ExampleMod.PATH + "\\src\\main\\resources\\assets\\example\\blockstates"));
 		deleteFolderContents(new File(ExampleMod.PATH + "\\src\\main\\resources\\assets\\example\\models\\block"));
