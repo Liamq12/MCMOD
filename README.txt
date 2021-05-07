@@ -54,4 +54,5 @@ http://www.minecraftforge.net/forum/index.php/topic,14048.0.html
 
 Liamq12's Notes:
 Navigate to the ExampleMod.java file to make your mod. Use the methods in the MOD class to add blocks, add items, add drops to items, and much more!
+Make sure to change the varible PATH in the ExampleMod.java file to the path leading to your MCMOD folder. Leave the Id as example for now. 
 Textures are added in textures folder under the \src\main\resources\assets\example path. 
