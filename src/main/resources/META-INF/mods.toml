@@ -1,0 +1,14 @@
+#Anything that is optional which you are not using, just delete that line. You can also delete any of the '#comments'
+
+modLoader="javafml" #mandatory
+loaderVersion="[35,)" #mandatory
+license="All rights reserved" #mandatory https://choosealicense.com/
+
+[[mods]] #mandatory
+modId="example" #mandatory
+version="1.0" #mandatory
+displayName="exmod" #mandatory
+authors="liamq12#7518" #optional
+description='''
+Test mod. Will it work? Who knows.
+''' #mandatory
