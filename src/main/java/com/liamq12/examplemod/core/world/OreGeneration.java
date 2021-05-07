@@ -19,7 +19,7 @@ import net.minecraftforge.event.world.BiomeLoadingEvent;
 public class OreGeneration {
 	public static void generateOres(final BiomeLoadingEvent event) {
 		if(MOD.oreGenerationKeys.size() > 0 && (!event.getCategory().equals(Biome.Category.NETHER) || !event.getCategory().equals(Biome.Category.THEEND))){
-			System.out.println("magic34 ");// + MOD.oreGenerationKeys.size());
+			//System.out.println("magic34 ");// + MOD.oreGenerationKeys.size());
 			for(int i = 0; i < MOD.oreGenerationKeys.size(); i++) {
 				//registerGenerate(event, MOD.oreGenerationKeys.get(i));
 				SpecialOre so = MOD.oreGenerationKeys.get(i);
