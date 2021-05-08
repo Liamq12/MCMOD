@@ -19,6 +19,7 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
+import java.rmi.registry.Registry;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedHashMap;
@@ -141,7 +142,16 @@ public class MOD {
 	}
 
 	public static RegistryObject<Item> item(String name) {
-		return ItemInit.ITEM_MAP.get(name);
+		if(ItemInit.ITEM_MAP.get(name) != null) {
+			return ItemInit.ITEM_MAP.get(name);
+		}else if(ItemInit.BLOCK_ITEM_MAP.get(name) != null) {
+			return ItemInit.BLOCK_ITEM_MAP.get(name);
+		}else if(ItemInit.SPECIAL_ITEM_MAP.get(name) != null) {
+			return ItemInit.SPECIAL_ITEM_MAP.get(name);
+		}else if(ItemInit.FOOD_ITEM_MAP.get(name) != null) {
+			return ItemInit.FOOD_ITEM_MAP.get(name);
+		}
+		return null;
 	}
 
 	public static RegistryObject<Block> block(String name) {
@@ -159,7 +169,34 @@ public class MOD {
 		SpecialOre so = new SpecialOre(name, veinSize, minHeight, maxHeight, amount);
 		oreGenerationKeys.add(so);
 	}
-
+	//Crafting Overloads
+	public static void setCraftingRecipe(String itemFrom, String itemTo, String topPattern, String middlePattern, String bottomPattern, int resultCount) {
+		craftingRecipeJsonGen(ExampleMod.MOD_ID + ":" + itemFrom, itemFrom, ExampleMod.MOD_ID + ":" + itemTo, itemTo, topPattern, middlePattern, bottomPattern, resultCount);
+	}
+	public static void setCraftingRecipe(Item itemFrom, String itemTo, String topPattern, String middlePattern, String bottomPattern, int resultCount) {
+		craftingRecipeJsonGen("minecraft:" + itemFrom.toString(), itemFrom.toString(), ExampleMod.MOD_ID + ":" + itemTo, itemTo, topPattern, middlePattern, bottomPattern, resultCount);
+	}
+	public static void setCraftingRecipe(String itemFrom, Item itemTo, String topPattern, String middlePattern, String bottomPattern, int resultCount) {
+		craftingRecipeJsonGen(ExampleMod.MOD_ID + ":" + itemFrom, itemFrom, "minecraft:" + itemTo.toString(), itemTo.toString(), topPattern, middlePattern, bottomPattern, resultCount);
+	}
+	public static void setCraftingRecipe(Item itemFrom, Item itemTo, String topPattern, String middlePattern, String bottomPattern, int resultCount) {
+		craftingRecipeJsonGen("minecraft:" + itemFrom.toString(), itemFrom.toString(), "minecraft:" + itemTo.toString(), itemTo.toString(), topPattern, middlePattern, bottomPattern, resultCount);
+	}
+	//Smelting Overloads
+	public static void setSmeltingRecipe(Item itemFrom, Item itemTo, double xp, int time) {
+		smeltingRecipeJsonGen("minecraft:" + itemFrom.toString(), itemFrom.toString(), "minecraft:" + itemTo.toString(), itemTo.toString(), xp, time);
+	}
+	public static void setSmeltingRecipe(String itemFrom, Item itemTo, double xp, int time) {
+		smeltingRecipeJsonGen(ExampleMod.MOD_ID + ":" + itemFrom, itemFrom, "minecraft:" + itemTo.toString(), itemTo.toString(), xp, time);
+	}
+	public static void setSmeltingRecipe(Item itemFrom, String itemTo, double xp, int time) {
+		smeltingRecipeJsonGen("minecraft:" + itemFrom.toString(), itemFrom.toString(), "minecraft:" + itemTo.toString(), itemTo.toString(), xp, time);
+	}
+	public static void setSmeltingRecipe(String itemFrom, String itemTo, double xp, int time) {
+		smeltingRecipeJsonGen(ExampleMod.MOD_ID + ":" + itemFrom, itemFrom, ExampleMod.MOD_ID + ":" + itemTo, itemTo, xp, time);
+	}
+	
+	
 	// UTILITY FUNCTIONS
 	private static void writeItemJson(String itemName) {
 		JSONObject jso = new JSONObject();
@@ -180,7 +217,56 @@ public class MOD {
 			e.printStackTrace();
 		}
 	}
-
+	private static void craftingRecipeJsonGen(String itemFrom, String itemFromName, String itemTo, String itemToName, String topPattern, String middlePattern, String bottomPattern, int resultCount) {
+		String base = "{\r\n" + 
+				"    \"type\": \"minecraft:crafting_shaped\",\r\n" + 
+				"    \"pattern\": [\r\n" + 
+				"        \"" + topPattern + "\",\r\n" + 
+				"        \"" + middlePattern + "\",\r\n" + 
+				"        \"" + bottomPattern + "\"\r\n" + 
+				"    ],\r\n" + 
+				"    \"key\": {\r\n" + 
+				"        \"#\": {\r\n" + 
+				"            \"item\": \"" + itemFrom + "\"\r\n" + 
+				"        }\r\n" + 
+				"    },\r\n" + 
+				"    \"result\": {\r\n" + 
+				"        \"item\": \"" + itemTo + "\",\r\n" + 
+				"        \"count\": " + resultCount + "\r\n" + 
+				"    }\r\n" + 
+				"}";
+		File recipeJson = new File("C:\\Users\\liamh\\OneDrive\\Desktop\\MCMOD\\src\\main\\resources\\data\\example\\recipes\\" + itemFromName + "_to_" + itemToName + ".json");
+		try {
+			recipeJson.createNewFile();
+			FileWriter w = new FileWriter(ExampleMod.PATH + "\\src\\main\\resources\\data\\example\\recipes\\" + itemFromName + "_to_" + itemToName + ".json");
+			w.write(base);
+			w.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	private static void smeltingRecipeJsonGen(String itemFrom, String itemFromName, String itemTo, String itemToName, double xp, int time) {
+		String base = "{\r\n" + 
+				"    \"type\": \"minecraft:smelting\",\r\n" + 
+				"    \"ingredient\": {\r\n" + 
+				"        \"item\": \"" + itemFrom + "\"\r\n" + 
+				"    },\r\n" + 
+				"    \"result\": \"" + itemTo + "\",\r\n" + 
+				"    \"experience\": " + xp + ",\r\n" + 
+				"    \"cookingtime\": " + time + "\r\n" + 
+				"}";
+		File recipeJson = new File("C:\\Users\\liamh\\OneDrive\\Desktop\\MCMOD\\src\\main\\resources\\data\\example\\recipes\\" + itemFromName + "_to_" + itemToName + ".json");
+		try {
+			recipeJson.createNewFile();
+			FileWriter w = new FileWriter(ExampleMod.PATH + "\\src\\main\\resources\\data\\example\\recipes\\" + itemFromName + "_to_" + itemToName + ".json");
+			w.write(base);
+			w.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	@SuppressWarnings("unchecked")
 	public static void endLang() {
 		JSONObject jso = new JSONObject();
@@ -233,6 +319,7 @@ public class MOD {
 		deleteFolderContents(new File(ExampleMod.PATH + "\\src\\main\\resources\\assets\\example\\blockstates"));
 		deleteFolderContents(new File(ExampleMod.PATH + "\\src\\main\\resources\\assets\\example\\models\\block"));
 		deleteFolderContents(new File(ExampleMod.PATH + "\\src\\main\\resources\\data\\example\\loot_tables\\blocks"));
+		deleteFolderContents(new File(ExampleMod.PATH + "\\src\\main\\resources\\data\\example\\recipes"));
 	}
 
 	private static void deleteFolderContents(File folder) {
