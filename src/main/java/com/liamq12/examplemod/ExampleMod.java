@@ -1,7 +1,9 @@
 package com.liamq12.examplemod;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.Items;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.common.MinecraftForge;
@@ -22,6 +24,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.liamq12.examplemod.modpac.MOD;
 import com.liamq12.examplemod.world.BiomeInit;
+import com.liamq12.examplemod.common.items.CraftingItems;
 import com.liamq12.examplemod.core.init.BlockInit;
 import com.liamq12.examplemod.core.init.ItemInit;
 import com.liamq12.examplemod.core.world.OreGeneration;
@@ -53,6 +56,8 @@ public class ExampleMod
         MOD.makeFood("taco", Effects.SPEED, 200, 2, 1.0f, 1, 1.0f);
         MOD.generateOre("aquamarine_ore", 10, 15, 50, 20);
         MOD.generateOre("aqua", 3, 20, 60, 20);
+        MOD.setCraftingRecipe("aquamarine", Items.GOLD_BLOCK, "# #", " # ", "# #", 5);
+        //System.out.println("magic34 " + CraftingItems.ITEM_TEST_MAGIC34.toString());
         //^ ^ ^ ^ ^ ^ ^ ^//
         //Your Code Above
         
