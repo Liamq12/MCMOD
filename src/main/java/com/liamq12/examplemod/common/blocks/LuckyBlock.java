@@ -22,12 +22,12 @@ public class LuckyBlock extends Block {
 
     public LuckyBlock(Properties properties) {
 	super(properties);
-	Results r = new Results();
     }
     @Override
     public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity playerIn) {
 	// TODO Auto-generated method stub
 	super.onBlockHarvested(worldIn, pos, state, playerIn);
+	Results r = new Results();
 	r.setWorld(worldIn);
 	Random rand = new Random();
 	int randomNumber = rand.nextInt(ENTITY_LIST.size());

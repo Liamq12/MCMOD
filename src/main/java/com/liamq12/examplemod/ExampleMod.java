@@ -59,8 +59,11 @@ public class ExampleMod
         MOD.generateOre("aqua", 3, 20, 60, 20);
         MOD.setCraftingRecipe("aquamarine", Items.GOLD_BLOCK, "# #", " # ", "# #", 5);
         MOD.setSmeltingRecipe("aqua", "aquamarine", 0.2, 100);
+        //System.out.println()
         MOD.makeLuckyBlock("aqua");
         MOD.addLuckyBlockOutcome("aqua", EntityList.pig);
+        MOD.addLuckyBlockOutcome("aqua", EntityList.cow);
+        MOD.addLuckyBlockOutcome("aqua", EntityList.zombie);
         //System.out.println("magic34 " + CraftingItems.ITEM_TEST_MAGIC34.toString());
         //^ ^ ^ ^ ^ ^ ^ ^//
         //Your Code Above
