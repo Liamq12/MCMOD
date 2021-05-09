@@ -1,3 +1,4 @@
+FORGE README, GO TO BOTTOM FOR HOW TO USE THIS
 -------------------------------------------
 Source installation information for modders
 -------------------------------------------
