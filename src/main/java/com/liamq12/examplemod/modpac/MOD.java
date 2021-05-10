@@ -36,6 +36,7 @@ import org.json.simple.parser.ParseException;
 import com.liamq12.examplemod.ExampleMod;
 import com.liamq12.examplemod.common.blocks.PreInitBlock;
 import com.liamq12.examplemod.common.blocks.SpecialOre;
+import com.liamq12.examplemod.common.entities.EntityList;
 
 public class MOD {
 	static ArrayList<String> itemKeys = new ArrayList<>();
@@ -46,7 +47,9 @@ public class MOD {
 	public static ArrayList<SpecialOre> oreGenerationKeys = new ArrayList<>();
 
 	public static HashMap<String, Boolean> HAS_DROP = new HashMap<String, Boolean>();
-	public static HashMap<String, ArrayList<String>> MASTER_LUCKY_BLOCKS = new HashMap<String, ArrayList<String>>();
+	public static HashMap<String, ArrayList<String>> MASTER_LUCKY_BLOCKS_ENTITIES = new HashMap<String, ArrayList<String>>();
+	public static HashMap<String, ArrayList<String>> MASTER_LUCKY_BLOCKS_CUSTOM_ITEMS = new HashMap<String, ArrayList<String>>();
+	public static HashMap<String, ArrayList<Item>> MASTER_LUCKY_BLOCKS_VANILLIA_ITEMS = new HashMap<String, ArrayList<Item>>();
 	public static HashMap<String, PreInitBlock> PREINIT_BLOCKS = new HashMap<String, PreInitBlock>();
 
 	public MOD() {
@@ -231,11 +234,22 @@ public class MOD {
 		// BlockInit.registerLuckyBlock(name, hardness, resistance, harvestTool,
 		// harvestLevel);
 		writeBlockJson(name);
-		MASTER_LUCKY_BLOCKS.put(name, new ArrayList());
+		MASTER_LUCKY_BLOCKS_ENTITIES.put(name, new ArrayList<String>());
+		MASTER_LUCKY_BLOCKS_CUSTOM_ITEMS.put(name, new ArrayList<String>());
+		MASTER_LUCKY_BLOCKS_VANILLIA_ITEMS.put(name, new ArrayList<Item>());
 	}
 
 	public static void addLuckyBlockOutcome(String blockName, String entity) {
-		MASTER_LUCKY_BLOCKS.get(blockName).add(entity);
+		if (EntityList.permittedEntities.contains(entity)) {
+			MASTER_LUCKY_BLOCKS_ENTITIES.get(blockName).add(entity);
+		} else {
+			MASTER_LUCKY_BLOCKS_CUSTOM_ITEMS.get(blockName).add(entity);
+		}
+
+	}
+
+	public static void addLuckyBlockOutcome(String blockName, Item item) {
+		MASTER_LUCKY_BLOCKS_VANILLIA_ITEMS.get(blockName).add(item);
 	}
 
 	// UTILITY FUNCTIONS
@@ -392,16 +406,16 @@ public class MOD {
 			jso.put("block." + ExampleMod.MOD_ID + "." + activeName, activeName);
 			if (luckyBlocks.contains(activeName)) {
 				System.out.println("magic3444");
-				ItemInit.registerBlockItem(activeName);
 				PreInitBlock preBlock = PREINIT_BLOCKS.get(activeName);
 				BlockInit.registerLuckyBlock(activeName, preBlock.getHardness(), preBlock.getResistance(),
 						preBlock.getHarvestTool(), preBlock.getHarvestLevel());
+				ItemInit.registerBlockItem(activeName);
 			} else {
 				System.out.println("magic34445");
-				ItemInit.registerBlockItem(activeName);
 				PreInitBlock preBlock = PREINIT_BLOCKS.get(activeName);
 				BlockInit.registerBlock(activeName, preBlock.getHardness(), preBlock.getResistance(),
 						preBlock.getHarvestTool(), preBlock.getHarvestLevel());
+				ItemInit.registerBlockItem(activeName);
 			}
 		}
 		PrintWriter pw;
@@ -416,12 +430,22 @@ public class MOD {
 		}
 		// Add luck block outcomes
 		for (int i = 0; i < luckyBlocks.size(); i++) {
-			for (int j = 0; j < MASTER_LUCKY_BLOCKS.get(luckyBlocks.get(i)).size(); j++) {
+			for (int j = 0; j < MASTER_LUCKY_BLOCKS_ENTITIES.get(luckyBlocks.get(i)).size(); j++) {
 				BlockInit.LUCKY_BLOCK_CLASS_MAP.get(luckyBlocks.get(i))
-						.setMobOutcome(MASTER_LUCKY_BLOCKS.get(luckyBlocks.get(i)).get(j));
+						.setMobOutcome(MASTER_LUCKY_BLOCKS_ENTITIES.get(luckyBlocks.get(i)).get(j));
+			}
+			System.out.println("size is " + ItemInit.ITEM_CLASS_MAP.size());
+			for(int j = 0; j < MASTER_LUCKY_BLOCKS_CUSTOM_ITEMS.get(luckyBlocks.get(i)).size(); j++){
+				BlockInit.LUCKY_BLOCK_CLASS_MAP.get(luckyBlocks.get(i))
+						.setModdedItemOutcome(MASTER_LUCKY_BLOCKS_CUSTOM_ITEMS.get(luckyBlocks.get(i)).get(j));
+			}
+			for(int j = 0; j < MASTER_LUCKY_BLOCKS_VANILLIA_ITEMS.get(luckyBlocks.get(i)).size(); j++) {
+				BlockInit.LUCKY_BLOCK_CLASS_MAP.get(luckyBlocks.get(i))
+						.setVanilliaItemOutcome(MASTER_LUCKY_BLOCKS_VANILLIA_ITEMS.get(luckyBlocks.get(i)).get(j));
 			}
 		}
 	}
+	
 
 	public static void readyLang() {
 		File myJSON = new File(ExampleMod.PATH + "\\src\\main\\resources\\assets\\example\\lang\\en_us.json");

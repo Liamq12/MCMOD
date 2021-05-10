@@ -21,6 +21,13 @@ public class EntityList {
 		{
 			add(EntityList.pig);
 			add(EntityList.cow);
+			add(EntityList.zombie);
+			add(EntityList.skeleton);
+			add(EntityList.creeper);
+			add(EntityList.enderman);
+			add(EntityList.spider);
+			add(EntityList.enderdragon);
+			add(EntityList.chicken);
 		}
 	};
 

@@ -64,6 +64,10 @@ public class ExampleMod
         MOD.addLuckyBlockOutcome("aqua", EntityList.pig);
         MOD.addLuckyBlockOutcome("aqua", EntityList.cow);
         MOD.addLuckyBlockOutcome("aqua", EntityList.zombie);
+        MOD.addLuckyBlockOutcome("aqua", Items.GOLD_BLOCK);
+        MOD.addLuckyBlockOutcome("aqua", Items.DIAMOND);
+        MOD.addLuckyBlockOutcome("aqua", "aquamarine");
+        MOD.addLuckyBlockOutcome("aqua", "burger");
         //System.out.println("magic34 " + CraftingItems.ITEM_TEST_MAGIC34.toString());
         //^ ^ ^ ^ ^ ^ ^ ^//
         //Your Code Above
