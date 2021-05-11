@@ -24,6 +24,7 @@ public class OreGeneration {
 				//registerGenerate(event, MOD.oreGenerationKeys.get(i));
 				SpecialOre so = MOD.oreGenerationKeys.get(i);
 				//SpecialOre so = new SpecialOre("aquamarine_ore", 5, 15, 50, 20);
+				System.out.println("Pregen");
 				generateOre(event.getGeneration(), OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, BlockInit.BLOCK_MAP.get(so.getName()).get().getDefaultState(), so.getVeinSize(), so.getMinHeight(), so.getMaxHeight(), so.getAmount());
 			}
 		}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.liamq12.examplemod.ExampleMod;
+import com.liamq12.examplemod.common.blocks.LuckyBlock;
 
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -30,8 +31,20 @@ public class BlockInit {
 	public static HashMap<String, RegistryObject<Block>> BLOCK_MAP = new HashMap<String, RegistryObject<Block>>();
 	
 	public static void registerBlock(String blockName, float hardness, float resistance, ToolType harvestTool, int harvestLevel) {
+	    //System.out.println("magic34");
 		BLOCK_MAP.put(blockName, BLOCKS.register(blockName, () -> new Block(AbstractBlock.Properties.create(Material.IRON).hardnessAndResistance(hardness, resistance).harvestTool(harvestTool).harvestLevel(harvestLevel))));
 		//BLOCK_NAMES.add(blockName);
 		//BLOCK_LIST.add(BLOCKS.register(blockName, () -> new Block(AbstractBlock.Properties.create(Material.IRON).hardnessAndResistance(15f, 30f).harvestTool(ToolType.PICKAXE).harvestLevel(-1))));
+	}
+	
+	public static HashMap<String, RegistryObject<Block>> LUCKY_BLOCK_MAP = new HashMap<String, RegistryObject<Block>>();
+	public static HashMap<String, LuckyBlock> LUCKY_BLOCK_CLASS_MAP = new HashMap<String, LuckyBlock>();
+	
+	public static void registerLuckyBlock(String blockName, float hardness, float resistance, ToolType harvestTool, int harvestLevel) {
+	    System.out.println("magic344");
+		LUCKY_BLOCK_CLASS_MAP.put(blockName, new LuckyBlock(AbstractBlock.Properties.create(Material.IRON).hardnessAndResistance(hardness, resistance).harvestTool(harvestTool).harvestLevel(harvestLevel)));
+		//BLOCK_MAP.put(blockName, BLOCKS.register(blockName, () -> LUCKY_BLOCK_CLASS_MAP.get(blockName)));
+	    BLOCK_MAP.put(blockName, BLOCKS.register(blockName, () -> LUCKY_BLOCK_CLASS_MAP.get(blockName)));
+		
 	}
 }
