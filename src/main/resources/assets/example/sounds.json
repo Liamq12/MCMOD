@@ -1,0 +1,32 @@
+{
+    "cooldisk":{
+       "category":"item",
+       "subtitle":"cooldisk",
+       "sounds":[
+          {
+             "name":"example:cooldisk",
+             "stream":true
+          }
+       ]
+    },
+    "sus":{
+       "category":"item",
+       "subtitle":"sus",
+       "sounds":[
+          {
+             "name":"example:sus",
+             "stream":true
+          }
+       ]
+    },
+    "foreverdisk":{
+       "category":"item",
+       "subtitle":"foreverdisk",
+       "sounds":[
+          {
+             "name":"example:foreverdisk",
+             "stream":true
+          }
+       ]
+    }
+}
