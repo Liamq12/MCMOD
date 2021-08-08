@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "# #",
+        "# #",
+        "   "
+    ],
+    "key": {
+        "#": {
+            "item": "example:aquamarine"
+        }
+    },
+    "result": {
+        "item": "example:test_bot",
+        "count": 1
+    }
+}

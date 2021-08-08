@@ -1,0 +1,12 @@
+{
+    "foreverdisk":{
+       "category":"item",
+       "subtitle":"Bubblegloop Swamp",
+       "sounds":[
+          {
+             "name":"example:item/foreverdisk",
+             "stream":true
+          }
+       ]
+    }
+ }
