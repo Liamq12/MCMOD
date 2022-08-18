@@ -1,3 +1,5 @@
+UPDATE: This is very old. New 1.18 version in progress on profile. 
+
 FORGE README, GO TO BOTTOM FOR HOW TO USE THIS
 -------------------------------------------
 Source installation information for modders
