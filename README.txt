@@ -1,4 +1,4 @@
-UPDATE: This is very old. New 1.18 version in progress on profile. 
+UPDATE: This is very old and likely will not work with modern releases
 
 FORGE README, GO TO BOTTOM FOR HOW TO USE THIS
 -------------------------------------------
